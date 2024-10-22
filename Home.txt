@@ -1,0 +1,1165 @@
+// import React from "react";
+// import SideNavbar from "./utils/SideNavbar";
+
+// const Home = () => {
+//   return (
+//     <>
+//       <SideNavbar />
+//     </>
+//   );
+// };
+
+// export default Home;
+
+import React, { useState } from "react";
+import axios from "axios";
+import FooterBar from "./common/footer";
+
+const SideNavbar = () => {
+  const [selectedTech, setSelectedTech] = useState(null);
+
+  // Dummy data for technology details
+  const techDetails = [
+    { id: 1, name: "Tech Info New" },
+    { id: 2, name: "Change Password" },
+    { id: 3, name: "Logout" },
+  ];
+
+  const [technologyDetails, setTechnologyDetails] = useState({
+    technologyRefNo: "",
+    fileNo: "",
+    keywordTechnology: "",
+    nameKnowhow: "",
+    industrialSector: "",
+    multiLabInstitute: "",
+    leadLaboratory: "",
+    associateInstitute: "",
+    technologyLevel: "",
+    scaleDevelopment: "",
+    yearDevelopment: "",
+    briefKnowhow: "",
+    competitivePosition: "",
+    technoPeriod: "",
+    marketPotential: "",
+    environmentalStatutory: "",
+    highPicture: "",
+    laboratoryDetail: "",
+  });
+
+  const handleChange = (event) => {
+    setTechnologyDetails((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    console.log(technologyDetails);
+    console.log("riteshg ccmvasjcbkascxnasnxsamxasln");
+    const url = "http://localhost:8081/createData"; // Replace with your API endpoint
+    const payload = {
+      technologyRefNo: technologyDetails.technologyRefNo,
+      fileNo: technologyDetails.fileNo,
+      keywordTechnology: technologyDetails.keywordTechnology,
+      nameKnowhow: technologyDetails.nameKnowhow,
+      industrialSector: technologyDetails.industrialSector,
+      multiLabInstitute: technologyDetails.multiLabInstitute,
+      leadLaboratory: technologyDetails.leadLaboratory,
+      associateInstitute: technologyDetails.associateInstitute,
+      technologyLevel: technologyDetails.technologyLevel,
+      scaleDevelopment: technologyDetails.scaleDevelopment,
+      yearDevelopment: technologyDetails.yearDevelopment,
+      briefKnowhow: technologyDetails.briefKnowhow,
+      competitivePosition: technologyDetails.competitivePosition,
+      technoPeriod: technologyDetails.technoPeriod,
+      marketPotential: technologyDetails.marketPotential,
+      environmentalStatutory: technologyDetails.environmentalStatutory,
+      highPicture: technologyDetails.highPicture,
+      laboratoryDetail: technologyDetails.laboratoryDetail,
+    };
+
+    const headers = {
+      "Content-Type": "application/json",
+      // 'Authorization': 'Bearer YOUR_ACCESS_TOKEN'  // Replace with your actual token if needed
+    };
+
+    axios
+      .post(url, payload, { headers: headers })
+      .then((response) => {
+        console.log("Response data:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    //Call API and send data
+    //Send data to db.
+  };
+
+  console.log("technologyDetails ", technologyDetails);
+
+  const handleTechClick = (tech) => {
+    setSelectedTech(tech);
+  };
+
+  return (
+    <>
+      <div className="mb-1 bg-slate-400 sticky top-0 p-4 -m-4 flex justify-between items-center">
+        <h1 className="text-4xl text-center font-bold ml-96 ">
+          CSIR Technology Database India
+        </h1>
+        <img
+          src="https://www.csir.res.in/sites/default/files/inline-images/CSIR-Logo.jpg"
+          alt="Logo"
+          className="h-10 w-10 mr-4"
+        ></img>
+      </div>
+      <div className="flex h-212vh mt-n4 mb-n4 ml-n4 mr-n4">
+        <div className="bg-gray-800 text-white w-1/7 py-8">
+          <div className="px-8">
+            <h2 className="text-xl font-bold mb-4">Tech-Info List</h2>
+            <ul>
+              {techDetails.map((tech) => (
+                <li
+                  key={tech.id}
+                  className={`py-2 cursor-pointer ${
+                    selectedTech && selectedTech.id === tech.id
+                      ? "font-bold"
+                      : ""
+                  }`}
+                  onClick={() => handleTechClick(tech)}
+                >
+                  {tech.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Form */}
+        <div className="flex-1 p-8 bg-blue-200">
+          <h2 className="text-3xl font-bold mb-4 text-center">
+            Technology Details
+          </h2>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Technology /Knowhow Ref No:</td>
+                <td>
+                  <input
+                    type="text" // Specify the input type here
+                    name="technologyRefNo"
+                    value={technologyDetails.technologyRefNo}
+                    onChange={handleChange}
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">File No.</td>
+                <td>
+                  <input
+                    type="text"
+                    className="w-full p-1 text-lg outline-0.1 rounded-md"
+                    name="fileNo"
+                    onChange={handleChange}
+                    value={technologyDetails.fileNo}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Keyword for Technology</td>
+                <td>
+                  <input
+                    type="text"
+                    name="keywordTechnology"
+                    value={technologyDetails.keywordTechnology}
+                    onChange={handleChange}
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">
+                  Name of Technology/Knowhow: &nbsp;
+                  <span className="Hint block text-sm text-red-500 inline">
+                    * Max. 500 Characters
+                  </span>
+                </td>
+                <td>
+                  <textarea
+                    type="text"
+                    name="nameKnowhow"
+                    value={techDetails.nameKnowhow}
+                    onChange={handleChange}
+                    id="message"
+                    rows="3"
+                    className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  ></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Industrial Sector</td>
+                <td>
+                  <select
+                    name="industrialSector"
+                    value={techDetails.industrialSector}
+                    onChange={handleChange}
+                    id="sector"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option selected>--Please Select--</option>
+                    <option value="US">
+                      Agriculture and Allied Industries(AG&A)
+                    </option>
+                    <option value="CA">Auto Components(AUTOC)</option>
+                    <option value="FR">Automobiles(AUTO)</option>
+                    <option value="DE">Aviation(AVT)</option>
+                    <option value="DE">Banking(BNK)</option>
+                    <option value="DE">Biotechnology(BIOT)</option>
+                    <option value="DE">Cement(CEM)</option>
+                    <option value="DE">Chemicals(CHE)</option>
+                    <option value="DE">Consumer Durables(CONSD)</option>
+                    <option value="DE">Defence Manufacturing(DEFM)</option>
+                    <option value="DE">Education and Training (EDU&T)</option>
+                    <option value="DE">
+                      {" "}
+                      Electronics System Design & Manufacturing (ESDM)
+                    </option>
+                    <option value="DE">
+                      {" "}
+                      Engineering and Capital Goods (EN&CG)
+                    </option>
+                    <option value="DE">Financial Services (FINS)</option>
+                    <option value="DE">
+                      Fast Moving Consumer Goods (FMCG){" "}
+                    </option>
+                    <option value="DE">Gems and Jewellery (GEMJ)</option>
+                    <option value="DE">Healthcare (HTC)</option>
+                    <option value="DE">Infrastructure (INF)</option>
+                    <option value="DE">Insurance (INS)</option>
+                    <option value="DE">
+                      {" "}
+                      IT & Business Process Management (IT&BPM)
+                    </option>
+                    <option value="DE">Leather & Non-Leather (LEA)</option>
+                    <option value="DE">Manufacturing (MNF)</option>
+                    <option value="DE">Media and Entertainment (ENTM)</option>
+                    <option value="DE">Medical Devices (MEDD)</option>
+                    <option value="DE">Metals and Mining (M&M)</option>
+                    <option value="DE">
+                      {" "}
+                      Micro, Small and Medium Enterprises (MSME){" "}
+                    </option>
+                    <option value="DE">Oil and Gas (O&G)</option>
+                    <option value="DE">Pharmaceuticals (PHARMA)</option>
+                    <option value="DE">Ports (PORT)</option>
+                    <option value="DE">Power (POWER)</option>
+                    <option value="DE">Railways (RLY)</option>
+                    <option value="DE">Real Estate (REST)</option>
+                    <option value="DE">Renewable Energy (RE)</option>
+                    <option value="DE">Retail (RET)</option>
+                    <option value="DE">Roads (ROAD)</option>
+                    <option value="DE">Rural Development (RD)</option>
+                    <option value="DE">Science and Technology (S&T)</option>
+                    <option value="DE">Strategic Sector (SS)</option>
+                    <option value="DE">Services (SRV)</option>
+                    <option value="DE">Steel (STEEL)</option>
+                    <option value="DE">Telecommunications (TCOM)</option>
+                    <option value="DE">Textiles (TXT)</option>
+                    <option value="DE">Tourism and Hospitality (THOSP)</option>
+                    <option value="DE">Others (OTH)</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Lead Laboratory/Institute</td>
+                <td>
+                  <select
+                    name="leadLaboratory"
+                    value={technologyDetails.leadLaboratory}
+                    onChange={handleChange}
+                    id="leadLaboratory"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option selected>--Please Select--</option>
+                    <option value="US">
+                      Agriculture and Allied Industries(AG&A)
+                    </option>
+                    <option value="CA">Auto Components(AUTOC)</option>
+                    <option value="FR">Automobiles(AUTO)</option>
+                    <option value="DE">Aviation(AVT)</option>
+                    <option value="DE">Banking(BNK)</option>
+                    <option value="DE">Biotechnology(BIOT)</option>
+                    <option value="DE">Cement(CEM)</option>
+                    <option value="DE">Chemicals(CHE)</option>
+                    <option value="DE">Consumer Durables(CONSD)</option>
+                    <option value="DE">Defence Manufacturing(DEFM)</option>
+                    <option value="DE">Education and Training (EDU&T)</option>
+                    <option value="DE">
+                      {" "}
+                      Electronics System Design & Manufacturing (ESDM)
+                    </option>
+                    <option value="DE">
+                      {" "}
+                      Engineering and Capital Goods (EN&CG)
+                    </option>
+                    <option value="DE">Financial Services (FINS)</option>
+                    <option value="DE">
+                      Fast Moving Consumer Goods (FMCG){" "}
+                    </option>
+                    <option value="DE">Gems and Jewellery (GEMJ)</option>
+                    <option value="DE">Healthcare (HTC)</option>
+                    <option value="DE">Infrastructure (INF)</option>
+                    <option value="DE">Insurance (INS)</option>
+                    <option value="DE">
+                      {" "}
+                      IT & Business Process Management (IT&BPM)
+                    </option>
+                    <option value="DE">Leather & Non-Leather (LEA)</option>
+                    <option value="DE">Manufacturing (MNF)</option>
+                    <option value="DE">Media and Entertainment (ENTM)</option>
+                    <option value="DE">Medical Devices (MEDD)</option>
+                    <option value="DE">Metals and Mining (M&M)</option>
+                    <option value="DE">
+                      {" "}
+                      Micro, Small and Medium Enterprises (MSME){" "}
+                    </option>
+                    <option value="DE">Oil and Gas (O&G)</option>
+                    <option value="DE">Pharmaceuticals (PHARMA)</option>
+                    <option value="DE">Ports (PORT)</option>
+                    <option value="DE">Power (POWER)</option>
+                    <option value="DE">Railways (RLY)</option>
+                    <option value="DE">Real Estate (REST)</option>
+                    <option value="DE">Renewable Energy (RE)</option>
+                    <option value="DE">Retail (RET)</option>
+                    <option value="DE">Roads (ROAD)</option>
+                    <option value="DE">Rural Development (RD)</option>
+                    <option value="DE">Science and Technology (S&T)</option>
+                    <option value="DE">Strategic Sector (SS)</option>
+                    <option value="DE">Services (SRV)</option>
+                    <option value="DE">Steel (STEEL)</option>
+                    <option value="DE">Telecommunications (TCOM)</option>
+                    <option value="DE">Textiles (TXT)</option>
+                    <option value="DE">Tourism and Hospitality (THOSP)</option>
+                    <option value="DE">Others (OTH)</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Multi Laboratory/Institute</td>
+                <td>
+                  {/* <input className="w-full p-2 text-lg outline-0.1 rounded-md" /> */}
+                  <div class="inline-flex items-center mb-4 text-center border border-black rounded-xl px-4 py-1 bg-white">
+                    <input
+                      id="radio-yes"
+                      type="radio"
+                      value="yes"
+                      name="disabled-radio"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    ></input>
+                    <label
+                      for="disabled-radio-1"
+                      class="ms-2 mr-2 text-sm font-medium text-gray-400 dark:text-gray-500"
+                    >
+                      Yes
+                    </label>
+                    <input
+                      checked
+                      id="disabled-radio-2"
+                      type="radio"
+                      value=""
+                      name="disabled-radio"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    ></input>
+                    <label
+                      for="disabled-radio-2"
+                      class="ms-2 text-sm font-medium text-gray-400 dark:text-gray-500"
+                    >
+                      No
+                    </label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Associate Laboratory/Institute</td>
+                <td>
+                  <input
+                    type="text"
+                    name="associateInstitute"
+                    value={technologyDetails.associateInstitute}
+                    onChange={handleChange}
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Technology Readiness Level(TRL)</td>
+                <td>
+                  <input
+                    type="text"
+                    name="technologyLevel"
+                    value={technologyDetails.technologyLevel}
+                    onChange={handleChange}
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">
+                  Scale of the Development &nbsp;
+                  <span className="Hint block text-sm text-red-500 inline">
+                    * Max. 500 Characters
+                  </span>
+                </td>
+                <textarea
+                  value={technologyDetails.scaleDevelopment}
+                  type="text"
+                  name="scaleDevelopment"
+                  onChange={handleChange}
+                  id="txtCPos"
+                  rows="9"
+                  cols="25"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                ></textarea>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Year of Development</td>
+                <td>
+                  <input
+                    type="text"
+                    name="yearDevelopment"
+                    value={technologyDetails.yearDevelopment}
+                    onChange={handleChange}
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">
+                  Brief details of Technology/Knowhow &nbsp;
+                  <span className="Hint block text-sm text-red-500 inline">
+                    * Max. 500 Characters
+                  </span>
+                </td>
+                <textarea
+                  value={technologyDetails.briefKnowhow}
+                  type="text"
+                  name="briefKnowhow"
+                  onChange={handleChange}
+                  id="message"
+                  rows="3"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                ></textarea>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">
+                  Competitive Positioning in the domain &nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span className="Hint block text-sm text-red-500 inline">
+                    * Max. 1500 Characters
+                  </span>
+                  <br />
+                  (how is it better than competing technology)/ <br />
+                  Technology Benchmarking
+                </td>
+                <textarea
+                  type="text"
+                  value={technologyDetails.competitivePosition}
+                  name="competitivePosition"
+                  onChange={handleChange}
+                  id="txtCPos"
+                  rows="9"
+                  cols="25"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                ></textarea>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Potential Stakeholders</td>
+                <td>
+                  <input
+                    type="text"
+                    name="potentialStakeholders"
+                    value={technologyDetails.potentialStakeholders}
+                    onChange={handleChange}
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">
+                  Techno Economics(including <br></br>
+                  development $ deployment cost,<br></br>
+                  operational cost payback period etc.) &nbsp;
+                  <span className="Hint block text-sm text-red-500 inline">
+                    * Max. 1500 Characters
+                  </span>
+                </td>
+                <textarea
+                  type="text"
+                  name="technoPeriod"
+                  value={technologyDetails.technoPeriod}
+                  onChange={handleChange}
+                  id="txtCPos"
+                  rows="9"
+                  cols="25"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                ></textarea>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold"> Market Potential </td>
+                <td>
+                  <input
+                    type="text"
+                    name="marketPotential"
+                    value={technologyDetails.marketPotential}
+                    onChange={handleChange}
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">
+                  Environmental considerations/Statutory
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="environmentalStatutory"
+                    value={technologyDetails.environmentalStatutory}
+                    onChange={handleChange}
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">High Resolution Picture(Optional)</td>
+                <td>
+                  {/* <input className="w-full p-2 text-lg outline-0.1 rounded-md" /> */}
+                  <label
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    for="file_input"
+                  ></label>
+                  <input
+                    class="block w-full text-sm leading-[2rem] text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="file_input"
+                    type="file"
+                    name="highPicture"
+                    value={technologyDetails.highPicture}
+                    onChange={handleChange}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-bold">Laboratory Contact Details</td>
+                <td>
+                  <input
+                    type="text"
+                    name="laboratoryDetail"
+                    value={technologyDetails.laboratoryDetail}
+                    onChange={handleChange}
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="flex justify-center mt-4">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+            >
+              Submit
+            </button>
+          </div>
+          <FooterBar></FooterBar>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default SideNavbar;
+
+
+
+//home4//
+
+
+import { useState, useEffect } from "react";
+import axios from "axios";
+import FooterBar from "./common/footer";
+import Header from "./common/header";
+// import MyForm from "./common/button";
+import Section from "./common/section";
+import Sidebar from "./common/sidebar";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import Swal from "sweetalert2";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+const Home4 = () => {
+  const initialValues = {
+    technologyRefNo: "",
+    fileNo: "",
+    keywordTechnology: "",
+    nameKnowhow: "",
+    industrialSector: "",
+     royaltyReceived: [{ amount: "", date: null }],
+    premiaReceived: [{ amount: "", date: null }],
+  };
+  const [dateOfLicense, setDateOfLicense] = useState(null);
+  const [dateOfRoyalty, setDateOfRoyalty] = useState(null);
+  const [dateOfPremia, setDateOfPremia] = useState(null);
+  const [licenseValidUpto, setLicenseValidUpto] = useState(null);
+  const [dateOfAgreementSigning, setDateOfAgreementSigning] = useState(null);
+
+ const [royalties, setRoyalties] = useState([{ amount: "", date: null }]);
+  const [premias, setPremias] = useState([{ amount: "", date: null }]);
+  const [grandTotal, setGrandTotal] = useState(null)
+
+   useEffect(() => {
+    const totalRoyalties = royalties.reduce(
+      (acc, item) => acc + parseFloat(item.amount || 0),
+      0
+    );
+    const totalPremias = premias.reduce(
+      (acc, item) => acc + parseFloat(item.amount || 0),
+      0
+    );
+    setGrandTotal(totalRoyalties + totalPremias);
+  }, [royalties, premias]);
+
+  // Define the min and max date limits
+  const minDate = new Date("1900-08-12");
+  const maxDate = new Date("3000-08-12");
+
+  const validationSchema = Yup.object({
+    // technologyRefNo: Yup.string().required("Required"),
+    // fileNo: Yup.string().required("Required"),
+    // keywordTechnology: Yup.string().required("Required"),
+    // nameKnowhow: Yup.string().required("Required"),
+    // industrialSector: Yup.string().required("Required"),
+  });
+
+  const handleSubmit = (values) => {
+    console.log("handle submit is calling******************", values);
+    const url = "http://localhost:8081/createData"; // Replace with your API endpoint
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    axios
+      .post(url, values, { headers: headers })
+      .then((response) => {
+        console.log("Response data:", response.data);
+        Swal.fire({
+          title: "Success!",
+          text: "Form submitted successfully!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Form submission failed. Please try again.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      });
+  };
+
+  return (
+    <>
+      <Header />
+      <div className="flex">
+        <div className="bg-gray-800">
+          <Sidebar />
+        </div>
+        {/* Form */}
+        <div className="flex-1 p-8 bg-blue-200 border">
+          <Section sectionLine="Section 3 : Details of License -Add/Modify Sub Form " />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ setFieldValue }) => (
+              <Form>
+                <div className="form-group mb-4">
+                  <label className="font-bold" htmlFor=" LicenseName">
+                    License Name.
+                    <span className="Hint block text-sm text-red-500 inline">
+                      Max. 300 Characters
+                    </span>
+                  </label>
+                  <Field
+                    maxLength="300"
+                    type="text"
+                    name="LicenseName"
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                  <ErrorMessage
+                    name="LicenseName"
+                    component="div"
+                    className="text-red-500"
+                    f
+                  />
+                </div>
+
+                <div className="form-group ">
+                  <label className="font-bold" htmlFor="DateOfAgreementSigning">
+                    Date of Agreement Signing &nbsp;
+                  </label>
+                  <div className="Home4">
+                    <DatePicker
+                      selected={dateOfAgreementSigning}
+                      onChange={(date) => setDateOfAgreementSigning(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      className="w-full p-2 text-lg outline-0.1 rounded-md"
+                      placeholderText="Select a date "
+                    />
+                  </div>
+
+                  <ErrorMessage
+                    name="DateOfAgreementSigning"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="font-bold" htmlFor="TypeofLicense">
+                    Type of License
+                  </label>
+                  <Field
+                    name="TypeofLicense"
+                    as="select"
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  >
+                    <option value="">--Please Select--</option>
+                    <option value="Exclusive">Exclusive</option>
+                    <option value="Non-Exclusive">Non-Exclusive</option>
+                  </Field>
+                  <ErrorMessage
+                    name="TypeofLicense"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="font-bold" htmlFor="StaRegionalGeography">
+                    Regional Geography
+                  </label>
+                  <Field
+                    name="StaRegionalGeography"
+                    as="select"
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  >
+                    <option value="">--Please Select--</option>
+                    <option value="North">North</option>
+                    <option value="North-East">North-East</option>
+                    <option value="East">East</option>
+                    <option value="West">West</option>
+                    <option value="South">South</option>
+                  </Field>
+                  <ErrorMessage
+                    name="StaRegionalGeography"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+                <div className="form-group mb-4">
+                  <label className="font-bold" htmlFor="DetailsOfExclusivity">
+                    Details of Exclusivity: &nbsp;
+                    <span className="Hint block text-sm text-red-500 inline">
+                      Max. 300 Characters
+                    </span>
+                  </label>
+                  <Field
+                    type="text"
+                    name="DetailsOfExclusivity"
+                    as="textarea"
+                    maxLength="300"
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                  <ErrorMessage
+                    name="DetailsOfExclusivity"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+
+                <div className="form-group ">
+                  <label className="font-bold" htmlFor="DateOfLicense ">
+                    Date of License &nbsp;
+                  </label>
+                  <div className="Home4">
+                    <DatePicker
+                      selected={licenseValidUpto}
+                      onChange={(date) => setLicenseValidUpto(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      className="w-full p-2 text-lg outline-0.1 rounded-md"
+                      placeholderText="Select a date "
+                    />
+                  </div>
+
+                  <ErrorMessage
+                    name="DateOfLicense"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+                <div className="form-group ">
+                  <label className="font-bold" htmlFor="LicenseValidUpto">
+                    License Valid Upto &nbsp;
+                  </label>
+                  <div className="Home4">
+                    <DatePicker
+                      selected={dateOfLicense}
+                      onChange={(date) => setDateOfLicense(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      className="w-full p-2 text-lg outline-0.1 rounded-md"
+                      placeholderText="Select a date "
+                    />
+                  </div>
+                  <ErrorMessage
+                    name="LicenseValidUpto"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+                <div className="form-group mb-4">
+                  <label className="font-bold" htmlFor="PaymentTerms">
+                    Payment Terms: &nbsp;
+                    <span className="Hint block text-sm text-red-500 inline">
+                      Max. 300 Characters
+                    </span>
+                  </label>
+                  <Field
+                    type="text"
+                    name="PaymentTerms"
+                    as="textarea"
+                    maxLength="300"
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                  />
+                  <ErrorMessage
+                    name="PaymentTerms"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+
+                <div className="form-group mb-4 flex items-center">
+                  <div className="w-1/2">
+                    <label className="font-bold" htmlFor="RoyaltyReceived">
+                      Royalty Received (in INR)
+                    </label>
+                    <Field
+                      maxLength="300"
+                      type="number"
+                      step="0.01"
+                      name="RoyaltyReceived"
+                      className="w-full p-2 text-lg outline-0.1 rounded-md"
+                      onChange={(e) => setRoyaltyReceived(e.target.value)}
+                      value={royaltyReceived}
+                    />
+                    <ErrorMessage
+                      name="royaltyReceived"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
+
+                  <div className="w-1/5 pl-4">
+                    <label className="font-bold" htmlFor="DateOfLicense">
+                      Date of Royalty Received
+                    </label>
+                    <DatePicker
+                      selected={dateOfRoyalty}
+                      onChange={(date) => setDateOfRoyalty(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      className="w-full p-2  text-lg outline-0.1 rounded-md mr-2"
+                      placeholderText="Select a date"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group mb-4 flex items-center">
+                  <div className="w-1/2">
+                    <label className="font-bold" htmlFor="premiaReceived">
+                      Premia Received (in INR)
+                    </label>
+                    <Field
+                      maxLength="300"
+                      type="number"
+                      step="0.01"
+                      name="premiaReceived"
+                      className="w-full p-2 text-lg outline-0.1 rounded-md"
+                      onChange={(e) => setPremiaReceived(e.target.value)}
+                      value={premiaReceived}
+                    />
+                    <ErrorMessage
+                      name="setPremiaReceived"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
+
+                  <div className="w-1/5 pl-4">
+                    <label className="font-bold" htmlFor="DateOfLicense">
+                      Date of Premia Received
+                    </label>
+                    <DatePicker
+                      selected={dateOfPremia}
+                      onChange={(date) => setDateOfPremia(date)}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      className="w-full p-2  text-lg outline-0.1 rounded-md mr-2"
+                      placeholderText="Select a date"
+                    />
+                  </div>
+                </div>
+                <div className="form-group mb-4">
+                  <label className="font-bold" htmlFor=" GrandTotal">
+                    Grand Total (in INR)
+                  </label>
+                  <Field
+                    maxLength="300"
+                    type="number"
+                    name="GrandTotal"
+                    className="w-full p-2 text-lg outline-0.1 rounded-md"
+                    value={grandTotal}
+                  />
+                  <ErrorMessage
+                    name="GrandTotal"
+                    component="div"
+                    className="text-red-500"
+                    f
+                  />
+                </div>
+                <div className="form-group mb-4 flex justify-center">
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md "
+                  >
+                    Save
+                  </button>
+                </div>
+                {/* <MyForm/> */}
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
+      <FooterBar />
+    </>
+  );
+};
+
+export default Home4;
+
+
+//change Password
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PValidation from "./PasswordValidation" // Assume you have a ChangePasswordValidation function
+import axios from "axios";
+
+function ChangePassword() {
+  const [values, setValues] = useState({
+    emailId: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
+
+  const handleInput = (event) => {
+    setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const validationErrors = PValidation(values); // Call ChangePasswordValidation function
+    setErrors(validationErrors); // Set validation errors
+    if (
+      values.emailId !== "" &&
+      values.newPassword !== "" &&
+      values.confirmPassword !== ""
+    ) {
+      try {
+        const response = await axios.post(
+          "http://localhost:8081/change-password",
+          values
+        );
+        console.log("API ", response);
+        if (response?.data?.message) {
+          navigate("/");
+        }
+      } catch (error) {
+        console.log("Error ", error);
+      }
+    }
+  };
+
+  return (
+    <div className="flex justify-center items-center bg-secondary bg-gradient h-screen ">
+      <div className="bg-red-300 p-16  w-[33%] border-slate-200 rounded-lg border-2">
+        <h2 className="text-xl font-bold mb-3">Change Password</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3 flex justify-between">
+            <label htmlFor="emailId" className="font-bold">
+              Email Address
+            </label>
+            <input
+              id="emailId"
+              type="email"
+              placeholder="Enter Your Email Address"
+              value={values.emailId}
+              name="emailId"
+              onChange={handleInput}
+              className="form-control rounded-0 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            />
+            {errors.emailId && (
+              <span className="text-danger">{errors.emailId}</span>
+            )}
+          </div>
+          <div className="mb-3 flex justify-between">
+            <label
+              htmlFor="newPassword"
+              className="font-bold hover:text-indigo-600"
+            >
+              New Password
+            </label>
+            <input
+              id="newPassword"
+              type="password"
+              placeholder="Enter Your New Password"
+              name="newPassword"
+              onChange={handleInput}
+              className="form-control rounded-0 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            />
+            {errors.newPassword && (
+              <span className="text-danger">{errors.newPassword}</span>
+            )}
+          </div>
+          <div className="mb-3 flex justify-between">
+            <label
+              htmlFor="confirmPassword"
+              className="font-bold hover:text-indigo-600"
+            >
+              Confirm Password
+            </label>
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm your new password"
+              name="confirmPassword"
+              onChange={handleInput}
+              className="form-control rounded-0 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            />
+            {errors.confirmPassword && (
+              <span className="text-danger">{errors.confirmPassword}</span>
+            )}
+          </div>
+          <div className="text-center">
+            <button
+              type="submit"
+              className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            >
+              Change Password
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default ChangePassword;

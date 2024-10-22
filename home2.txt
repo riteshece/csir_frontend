@@ -1,0 +1,95 @@
+import React, { useState } from "react";
+import FooterBar from "./common/footer";
+import Header from "./common/header";
+// import { Formik, Field, Form, ErrorMessage } from "formik";
+// import * as Yup from "yup";
+
+// import Section from "./common/section";
+// import SearchBar from "./common/searchBar";
+
+import Box from "@mui/material/Box";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useMovieData } from "@mui/x-data-grid-generator";
+
+const VISIBLE_FIELDS = [
+  "title",
+  "company",
+  "director",
+  "year",
+  "cinematicUniverse",
+  
+];
+
+const SideNavbar = () => {
+  const [selectedTech, setSelectedTech] = useState(null);
+
+  // Dummy data for technology details
+  const techDetails = [
+    { id: 1, name: "Tech-Info List", href: "/home2" },
+    { id: 2, name: "Tech-Info New", href: "/home" },
+    { id: 3, name: "Change Password" },
+    { id: 4, name: "Logout", href: "/signup" },
+  ];
+
+  const handleTechClick = (tech) => {
+    setSelectedTech(tech);
+  };
+
+  const data = useMovieData();
+
+  // Otherwise filter will be applied on fields such as the hidden column id
+  const columns = React.useMemo(
+    () =>
+      data.columns.filter((column) => VISIBLE_FIELDS.includes(column.field)),
+    [data.columns]
+  );
+
+  return (
+    <>
+      <Header />
+      {/* <Section /> */}
+      <div className="inline-flex">
+        <div className="flex mt-n8 mb-n4 ml-n4 mr-n4">
+          <div className="bg-gray-800 text-white py-8">
+            <div className="px-8">
+              <ul>
+                {techDetails.map((tech) => (
+                  <li
+                    key={tech.id}
+                    className={`py-2 cursor-pointer ${
+                      selectedTech && selectedTech.id === tech.id
+                        ? "font-bold"
+                        : ""
+                    }`}
+                    onClick={() => handleTechClick(tech)}
+                  >
+                    <a href={tech.href}>{tech.name}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <Box sx={{ height: 400, width: 1 }} className="mt-6">
+          <DataGrid
+            {...data}
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            columns={columns}
+            slots={{ toolbar: GridToolbar }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+              },
+            }}
+          />
+        </Box>
+      </div>
+      <FooterBar />
+    </>
+  );
+};
+
+export default SideNavbar;
